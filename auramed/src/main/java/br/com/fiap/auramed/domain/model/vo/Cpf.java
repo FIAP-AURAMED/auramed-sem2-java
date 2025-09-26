@@ -1,5 +1,7 @@
 package br.com.fiap.auramed.domain.model.vo;
 
+import br.com.fiap.auramed.domain.exception.DadosInvalidosException;
+
 import java.util.Objects;
 
 public record Cpf(String numero) {
@@ -8,11 +10,11 @@ public record Cpf(String numero) {
         String cpfLimpo = numero.replaceAll("[^0-9]", "");
 
         if (cpfLimpo.length() != 11) {
-            throw new IllegalArgumentException("O CPF deve conter exatamente 11 dígitos.");
+            throw new DadosInvalidosException("O CPF deve conter exatamente 11 dígitos.");
         }
 
         if (cpfLimpo.matches("(\\d)\\1{10}")) {
-            throw new IllegalArgumentException("CPF com todos os dígitos iguais é inválido.");
+            throw new DadosInvalidosException("CPF com todos os dígitos iguais é inválido.");
         }
     }
 }

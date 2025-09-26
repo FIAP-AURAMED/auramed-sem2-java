@@ -1,5 +1,7 @@
 package br.com.fiap.auramed.domain.model.vo;
 
+import br.com.fiap.auramed.domain.exception.DadosInvalidosException;
+
 import java.util.Objects;
 
 public record Telefone(String numero) {
@@ -8,7 +10,7 @@ public record Telefone(String numero) {
         String numeroLimpo = numero.replaceAll("[^0-9]", "");
 
         if (numeroLimpo.length() < 10 || numeroLimpo.length() > 11) {
-            throw new IllegalArgumentException("O número de telefone deve ter 10 ou 11 dígitos (com DDD).");
+            throw new DadosInvalidosException("O número de telefone deve ter 10 ou 11 dígitos (com DDD).");
         }
     }
 }

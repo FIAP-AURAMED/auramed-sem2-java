@@ -1,5 +1,7 @@
 package br.com.fiap.auramed.domain.model.vo;
 
+import br.com.fiap.auramed.domain.exception.DadosInvalidosException;
+
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -9,11 +11,11 @@ public record Email(String address) {
 
     public Email {
         if (address == null || address.trim().isEmpty()) {
-            throw new IllegalArgumentException("O e-mail não pode ser nulo ou vazio.");
+            throw new DadosInvalidosException("O e-mail não pode ser nulo ou vazio.");
         }
 
         if (!EMAIL_PATTERN.matcher(address).matches()) {
-            throw new IllegalArgumentException("O formato do e-mail é inválido.");
+            throw new DadosInvalidosException("O formato do e-mail é inválido.");
         }
 
     }

@@ -1,5 +1,7 @@
 package br.com.fiap.auramed.domain.model.vo;
 
+import br.com.fiap.auramed.domain.exception.DadosInvalidosException;
+
 import java.util.Objects;
 
 public record Endereco(
@@ -21,12 +23,12 @@ public record Endereco(
         Objects.requireNonNull(cep, "CEP não pode ser nulo.");
 
         if (uf.length() != 2) {
-            throw new IllegalArgumentException("UF deve ter exatamente 2 caracteres.");
+            throw new DadosInvalidosException("UF deve ter exatamente 2 caracteres.");
         }
 
         String cepLimpo = cep.replaceAll("[^0-9]", "");
         if (cepLimpo.length() != 8) {
-            throw new IllegalArgumentException("CEP deve conter 8 dígitos.");
+            throw new DadosInvalidosException("CEP deve conter 8 dígitos.");
         }
     }
 
