@@ -12,37 +12,13 @@ public class Pessoa {
     private Genero genero;
     private Telefone telefone;
 
-    public Pessoa(NomeCompleto nomeCompleto, Email email, Cpf cpf, DataNascimento dataNascimento, Genero genero, Telefone telefone) {
-        this.nomeCompleto = nomeCompleto;
-        this.email = email;
-        this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.genero = genero;
-        this.telefone = telefone;
-    }
-
-    public NomeCompleto getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public Cpf getCpf() {
-        return cpf;
-    }
-
-    public DataNascimento getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public Genero getGenero() {
-        return genero;
-    }
-
-    public Telefone getTelefone() {
-        return telefone;
+    public Pessoa(String nomeCompleto, String email, String cpf, LocalDate dataNascimento, Genero genero, String telefone) {
+        setNomeCompleto(nomeCompleto);
+        setEmail(email);
+        setCpf(cpf);
+        setEmail(email);
+        setDataNascimento(dataNascimento);
+        setTelefone(telefone);
     }
 
     public void setNomeCompleto(String nomeCompleto) {
@@ -59,10 +35,6 @@ public class Pessoa {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = new DataNascimento(dataNascimento);
-    }
-
-    public void setGenero(Genero genero) {
-        this.genero = genero;
     }
 
     public void setTelefone(String telefone) {

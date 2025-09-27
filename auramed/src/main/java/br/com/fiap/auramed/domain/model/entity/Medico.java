@@ -22,12 +22,4 @@ public class Medico extends Pessoa {
         this.crm = crm;
         this.senhaHash = senhaHash;
     }
-
-    public RegistroProfissional getCrm() {
-        return crm;
-    }
-
-    public String getSenhaHash() {
-        return senhaHash;
-    }
 }
