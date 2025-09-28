@@ -7,7 +7,7 @@ import java.util.Objects;
 public record Endereco(
         String logradouro,
         String numero,
-        String complemento, // Optional field
+        String complemento,
         String bairro,
         String cidade,
         String uf,

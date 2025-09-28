@@ -4,7 +4,7 @@ import br.com.fiap.auramed.domain.exception.DadosInvalidosException;
 
 import java.util.Objects;
 
-public record RegistroProfissional(String numero, Uf uf) {
+public record RegistroProfissional(String numero, UF uf) {
     public RegistroProfissional {
         Objects.requireNonNull(numero, "O número do registro não pode ser nulo.");
         Objects.requireNonNull(uf, "A UF do registro não pode ser nula.");
@@ -15,6 +15,6 @@ public record RegistroProfissional(String numero, Uf uf) {
     }
 
     public String getRegistroFormatado() {
-        return STR."\{this.numero}/\{this.uf.name()}";
+        return STR."\{this.numero}/\{this.uf}";
     }
 }
