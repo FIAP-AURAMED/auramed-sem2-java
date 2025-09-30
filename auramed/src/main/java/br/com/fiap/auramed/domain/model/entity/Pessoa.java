@@ -4,6 +4,7 @@ import br.com.fiap.auramed.domain.model.vo.*;
 import java.time.LocalDate;
 
 public class Pessoa {
+    private Long id;
     private NomeCompleto nomeCompleto;
     private Email email;
     private Cpf cpf;
@@ -26,6 +27,7 @@ public class Pessoa {
     }
 
     // --- Getters ---
+    public Long getId() { return id; }
     public Endereco getEndereco() { return endereco; }
     public NomeCompleto getNomeCompleto() { return nomeCompleto; }
     public Email getEmail() { return email; }
@@ -55,5 +57,11 @@ public class Pessoa {
     }
     public void setTelefone(String telefone) {
         this.telefone = new Telefone(telefone);
+    }
+    public void setId(Long id) {
+        if (this.id != null) {
+            throw new IllegalStateException("O ID de uma entidade já definida não pode ser alterado.");
+        }
+        this.id = id;
     }
 }

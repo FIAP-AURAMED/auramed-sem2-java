@@ -10,7 +10,7 @@ public record Endereco(
         String complemento,
         String bairro,
         String cidade,
-        String uf,
+        UF uf,
         String cep
 ) {
 
@@ -22,10 +22,6 @@ public record Endereco(
         Objects.requireNonNull(uf, "UF não pode ser nulo.");
         Objects.requireNonNull(cep, "CEP não pode ser nulo.");
 
-        if (uf.length() != 2) {
-            throw new DadosInvalidosException("UF deve ter exatamente 2 caracteres.");
-        }
-
         String cepLimpo = cep.replaceAll("[^0-9]", "");
         if (cepLimpo.length() != 8) {
             throw new DadosInvalidosException("CEP deve conter 8 dígitos.");
@@ -33,6 +29,6 @@ public record Endereco(
     }
 
     public Endereco(String logradouro, String numero, String bairro, String cidade, String uf, String cep) {
-        this(logradouro, numero, null, bairro, cidade, uf, cep);
+        this(logradouro, numero, null, bairro, cidade, UF.valueOf(uf.toUpperCase()), cep);
     }
 }

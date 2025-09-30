@@ -1,8 +1,8 @@
 package br.com.fiap.auramed.domain.model.vo;
 
 public enum Genero {
-    FEMININO('F'),
     MASCULINO('M'),
+    FEMININO('F'),
     OUTRO('O');
 
     private final char sigla;
@@ -13,5 +13,14 @@ public enum Genero {
 
     public char getSigla() {
         return sigla;
+    }
+
+    public static Genero fromSigla(char sigla) {
+        for (Genero genero : values()) {
+            if (genero.getSigla() == sigla) {
+                return genero;
+            }
+        }
+        throw new IllegalArgumentException(STR."Sigla de gênero inválida: \{sigla}");
     }
 }

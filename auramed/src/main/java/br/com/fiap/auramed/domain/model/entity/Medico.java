@@ -28,6 +28,7 @@ public class Medico extends Pessoa {
     }
 
     // Getters
+
     public RegistroProfissional getCrm() {
         return crm;
     }
@@ -35,4 +36,6 @@ public class Medico extends Pessoa {
     public String getSenhaHash() {
         return senhaHash;
     }
+
+
 }
