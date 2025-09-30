@@ -159,6 +159,114 @@ public class JdbcMedicoRepository implements MedicoRepository {
         }
     }
 
+    @Override
+    public Medico atualizar(Medico medico) {
+        if (medico.getId() == null) {
+            throw new InfraestruturaException("Não é possível atualizar médico sem ID");
+        }
+
+        String sqlPessoa = """
+        UPDATE T_ARMD_PESSOA 
+        SET nm_pessoa = ?, nm_email = ?, nr_cpf = ?, dt_nascimento = ?, 
+            st_genero = ?, nr_telefone = ? 
+        WHERE id_pessoa = ? AND tp_pessoa = 'MEDICO'
+        """;
+
+        String sqlMedico = """
+        UPDATE T_ARMD_MEDICO 
+        SET crm = ?, nm_senha_hash = ? 
+        WHERE id_pessoa = ?
+        """;
+
+        String sqlEnderecoDelete = "DELETE FROM T_ARMD_ENDERECO WHERE id_pessoa = ?";
+        String sqlEnderecoInsert = """
+        INSERT INTO T_ARMD_ENDERECO (id_endereco, id_pessoa, ds_logradouro, nr_endereco, 
+                                   ds_complemento, nm_bairro, nm_cidade, sg_uf, nr_cep) 
+        VALUES (SQ_ARMD_ENDERECO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+        try (Connection conn = this.databaseConnection.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try {
+                // Update Pessoa
+                try (PreparedStatement pstmt = conn.prepareStatement(sqlPessoa)) {
+                    pstmt.setString(1, medico.getNomeCompleto().valor());
+                    pstmt.setString(2, medico.getEmail().enderecoEmail());
+                    pstmt.setString(3, medico.getCpf().numero());
+                    pstmt.setDate(4, Date.valueOf(medico.getDataNascimento().data()));
+                    pstmt.setString(5, String.valueOf(medico.getGenero().getSigla()));
+                    pstmt.setString(6, medico.getTelefone().numero());
+                    pstmt.setLong(7, medico.getId());
+
+                    int affectedRows = pstmt.executeUpdate();
+                    if (affectedRows == 0) {
+                        throw new InfraestruturaException("Médico não encontrado para atualização: ID " + medico.getId());
+                    }
+                }
+
+                // Update Medico
+                try (PreparedStatement pstmt = conn.prepareStatement(sqlMedico)) {
+                    pstmt.setString(1, medico.getCrm().getRegistroFormatado());
+                    pstmt.setString(2, medico.getSenhaHash());
+                    pstmt.setLong(3, medico.getId());
+                    pstmt.executeUpdate();
+                }
+
+                // Update Endereco (delete existing and insert new)
+                try (PreparedStatement pstmt = conn.prepareStatement(sqlEnderecoDelete)) {
+                    pstmt.setLong(1, medico.getId());
+                    pstmt.executeUpdate();
+                }
+
+                if (medico.getEndereco() != null) {
+                    try (PreparedStatement pstmt = conn.prepareStatement(sqlEnderecoInsert)) {
+                        Endereco endereco = medico.getEndereco();
+                        pstmt.setLong(1, medico.getId());
+                        pstmt.setString(2, endereco.logradouro());
+                        pstmt.setString(3, endereco.numero());
+                        pstmt.setString(4, endereco.complemento());
+                        pstmt.setString(5, endereco.bairro());
+                        pstmt.setString(6, endereco.cidade());
+                        pstmt.setString(7, endereco.uf().name());
+                        pstmt.setString(8, endereco.cep());
+                        pstmt.executeUpdate();
+                    }
+                }
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new InfraestruturaException("Erro ao atualizar médico.", e);
+            }
+        } catch (SQLException e) {
+            throw new InfraestruturaException("Erro ao obter conexão com o banco de dados.", e);
+        }
+
+        return medico;
+    }
+
+    @Override
+    public Optional<Medico> buscarPorId(Long id) {
+        String sql = STR."\{SQL_SELECT_MEDICO_COMPLETO} AND p.id_pessoa = ?";
+
+        try (Connection conn = this.databaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setLong(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToMedico(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new InfraestruturaException(STR."Erro ao buscar médico por ID: \{id}", e);
+        }
+
+        return Optional.empty();
+    }
+
     private Medico mapResultSetToMedico(ResultSet rs) throws SQLException {
         // Pessoa
         Long id = rs.getLong("id_pessoa");
