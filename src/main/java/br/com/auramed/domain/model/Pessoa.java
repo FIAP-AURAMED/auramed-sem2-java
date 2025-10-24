@@ -2,6 +2,7 @@ package br.com.auramed.domain.model;
 
 import br.com.auramed.domain.exception.ValidacaoDeDominioException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Pessoa {
     private Integer id;
@@ -12,12 +13,14 @@ public class Pessoa {
     private String genero;
     private String telefone;
     private String tipoPessoa;
+    private LocalDateTime dataCadastro;
     private String ativo;
 
     public Pessoa(String nome, String telefone, String tipoPessoa) {
         this.nome = nome;
         this.telefone = telefone;
         this.tipoPessoa = tipoPessoa;
+        this.dataCadastro = LocalDateTime.now();
         this.ativo = "S";
     }
 
@@ -189,5 +192,13 @@ public class Pessoa {
 
     public void setAtivo(String ativo) {
         this.ativo = ativo;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }
