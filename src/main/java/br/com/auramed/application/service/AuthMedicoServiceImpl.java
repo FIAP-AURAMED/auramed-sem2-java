@@ -8,6 +8,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
 
+import java.util.List;
+
 @ApplicationScoped
 public class AuthMedicoServiceImpl implements AuthMedicoService {
 
@@ -106,6 +108,19 @@ public class AuthMedicoServiceImpl implements AuthMedicoService {
         } catch (Exception e) {
             logger.error("Erro ao localizar autenticação de médico. ID: " + id + ": " + e.getMessage());
             throw new RuntimeException("Falha ao localizar autenticação de médico: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<AuthMedico> listarTodos() {
+        try {
+            List<AuthMedico> authMedicos = authMedicoRepository.buscarTodos();
+            logger.info("Listados " + authMedicos.size() + " auth médicos");
+            return authMedicos;
+
+        } catch (Exception e) {
+            logger.error("Erro ao listar auth médicos: " + e.getMessage());
+            throw new RuntimeException("Falha ao listar auth médicos: " + e.getMessage());
         }
     }
 
