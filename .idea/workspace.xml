@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="675b3487-d989-468c-acfb-2e22e775cb51" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/auramed/application/service/AuthMedicoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/auramed/application/service/AuthMedicoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/auramed/domain/service/AuthMedicoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/auramed/domain/service/AuthMedicoService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
