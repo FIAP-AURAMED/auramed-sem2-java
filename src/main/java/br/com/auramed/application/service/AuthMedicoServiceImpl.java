@@ -156,40 +156,6 @@ public class AuthMedicoServiceImpl implements AuthMedicoService {
         }
     }
 
-    @Override
-    public void validarCredenciais(String email, String senha) throws EntidadeNaoLocalizadaException {
-        try {
-            AuthMedico authMedico = authMedicoRepository.buscarPorEmail(email);
-
-            if (!"S".equals(authMedico.getContaAtiva())) {
-                throw new RuntimeException("Conta inativa. Entre em contato com o administrador.");
-            }
-
-            if (authMedico.getTentativasLogin() >= 5) {
-                throw new RuntimeException("Conta bloqueada devido a tentativas excessivas. Entre em contato com o administrador.");
-            }
-
-            // Aqui você implementaria a validação da senha com bcrypt
-            // Por enquanto é um placeholder
-            if (!authMedico.getSenhaHash().equals(senha)) { // Isso será substituído por bcrypt
-                authMedico.incrementarTentativaLogin();
-                authMedicoRepository.editar(authMedico);
-                throw new RuntimeException("Credenciais inválidas.");
-            }
-
-            // Login bem-sucedido
-            authMedico.resetarTentativasLogin();
-            authMedicoRepository.editar(authMedico);
-            logger.info("Credenciais validadas com sucesso para email: " + email);
-
-        } catch (EntidadeNaoLocalizadaException e) {
-            logger.error("Tentativa de login com email não cadastrado: " + email);
-            throw new RuntimeException("Credenciais inválidas.");
-        } catch (Exception e) {
-            logger.error("Erro ao validar credenciais para email: " + email + ": " + e.getMessage());
-            throw new RuntimeException("Falha ao validar credenciais: " + e.getMessage());
-        }
-    }
 
     @Override
     public AuthMedico atualizarSenha(Integer id, String novaSenhaHash) throws EntidadeNaoLocalizadaException {

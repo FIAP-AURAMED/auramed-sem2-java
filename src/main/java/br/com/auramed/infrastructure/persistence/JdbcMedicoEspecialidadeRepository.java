@@ -22,7 +22,7 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
 
     @Override
     public void associarEspecialidade(Integer idMedico, Integer idEspecialidade) throws EntidadeNaoLocalizadaException {
-        String sql = "INSERT INTO T_ARMD_MEDICO_ESPECIALIDADE (T_ARMD_MEDICO_id_pessoa, T_ARMD_ESPECIALIDADE_id_especialidade, DT_ASSOCIACAO) " +
+        String sql = "INSERT INTO T_ARMD_MEDICO_ESPECIALIDADE (T_ARMD_MEDICO_ID_PESSOA, T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE, DT_ASSOCIACAO) " +
                 "VALUES (?, ?, CURRENT_TIMESTAMP)";
 
         try (Connection conn = databaseConnection.getConnection();
@@ -44,7 +44,7 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
     @Override
     public void desassociarEspecialidade(Integer idMedico, Integer idEspecialidade) throws EntidadeNaoLocalizadaException {
         String sql = "DELETE FROM T_ARMD_MEDICO_ESPECIALIDADE " +
-                "WHERE T_ARMD_MEDICO_id_pessoa = ? AND T_ARMD_ESPECIALIDADE_id_especialidade = ?";
+                "WHERE T_ARMD_MEDICO_ID_PESSOA = ? AND T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -66,8 +66,8 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
     public List<Especialidade> buscarEspecialidadesPorMedico(Integer idMedico) {
         String sql = "SELECT e.ID_ESPECIALIDADE, e.NM_ESPECIALIDADE, e.DS_ESPECIALIDADE, e.IN_ATIVO " +
                 "FROM T_ARMD_ESPECIALIDADE e " +
-                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON e.ID_ESPECIALIDADE = me.T_ARMD_ESPECIALIDADE_id_especialidade " +
-                "WHERE me.T_ARMD_MEDICO_id_pessoa = ? AND e.IN_ATIVO = 'S'";
+                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON e.ID_ESPECIALIDADE = me.T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE " +
+                "WHERE me.T_ARMD_MEDICO_ID_PESSOA = ? AND e.IN_ATIVO = 'S'";
         List<Especialidade> especialidades = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -93,12 +93,12 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
 
     @Override
     public List<Medico> buscarMedicosPorEspecialidade(Integer idEspecialidade) {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.NM_PESSOA, p.IN_ATIVO " +
                 "FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
-                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON m.T_ARMD_PESSOA_id_pessoa = me.T_ARMD_MEDICO_id_pessoa " +
-                "WHERE me.T_ARMD_ESPECIALIDADE_id_especialidade = ? AND p.IN_ATIVO = 'S'";
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
+                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON m.T_ARMD_PESSOA_ID_PESSOA = me.T_ARMD_MEDICO_ID_PESSOA " +
+                "WHERE me.T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE = ? AND p.IN_ATIVO = 'S'";
         List<Medico> medicos = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -129,7 +129,7 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
     @Override
     public boolean verificarAssociacao(Integer idMedico, Integer idEspecialidade) {
         String sql = "SELECT 1 FROM T_ARMD_MEDICO_ESPECIALIDADE " +
-                "WHERE T_ARMD_MEDICO_id_pessoa = ? AND T_ARMD_ESPECIALIDADE_id_especialidade = ?";
+                "WHERE T_ARMD_MEDICO_ID_PESSOA = ? AND T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -148,7 +148,7 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
 
     @Override
     public void removerTodasEspecialidadesDoMedico(Integer idMedico) {
-        String sql = "DELETE FROM T_ARMD_MEDICO_ESPECIALIDADE WHERE T_ARMD_MEDICO_id_pessoa = ?";
+        String sql = "DELETE FROM T_ARMD_MEDICO_ESPECIALIDADE WHERE T_ARMD_MEDICO_ID_PESSOA = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -163,7 +163,7 @@ public class JdbcMedicoEspecialidadeRepository implements MedicoEspecialidadeRep
 
     @Override
     public void removerTodosMedicosDaEspecialidade(Integer idEspecialidade) {
-        String sql = "DELETE FROM T_ARMD_MEDICO_ESPECIALIDADE WHERE T_ARMD_ESPECIALIDADE_id_especialidade = ?";
+        String sql = "DELETE FROM T_ARMD_MEDICO_ESPECIALIDADE WHERE T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

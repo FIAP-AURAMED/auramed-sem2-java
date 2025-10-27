@@ -22,7 +22,7 @@ public class JdbcEnderecoRepository implements EnderecoRepository {
 
     private Endereco mapResultSetToEndereco(ResultSet rs) throws SQLException {
         Pessoa pessoa = new Pessoa(null, null, null);
-        pessoa.setId(rs.getInt("T_ARMD_PESSOA_id_pessoa"));
+        pessoa.setId(rs.getInt("T_ARMD_PESSOA_ID_PESSOA"));
 
         Endereco endereco = new Endereco(
                 pessoa,
@@ -64,7 +64,7 @@ public class JdbcEnderecoRepository implements EnderecoRepository {
 
     @Override
     public List<Endereco> buscarPorPessoaId(Integer pessoaId) {
-        String sql = "SELECT * FROM T_ARMD_ENDERECO WHERE T_ARMD_PESSOA_id_pessoa = ?";
+        String sql = "SELECT * FROM T_ARMD_ENDERECO WHERE T_ARMD_PESSOA_ID_PESSOA = ?";
         List<Endereco> enderecos = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -126,7 +126,7 @@ public class JdbcEnderecoRepository implements EnderecoRepository {
 
     @Override
     public Endereco salvar(Endereco endereco) {
-        String sql = "INSERT INTO T_ARMD_ENDERECO (T_ARMD_PESSOA_id_pessoa, TP_ENDERECO, DS_LOGRADOURO, " +
+        String sql = "INSERT INTO T_ARMD_ENDERECO (T_ARMD_PESSOA_ID_PESSOA, TP_ENDERECO, DS_LOGRADOURO, " +
                 "NR_ENDERECO, DS_COMPLEMENTO, NM_BAIRRO, NM_CIDADE, SG_UF, NR_CEP, IN_PRINCIPAL) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -217,7 +217,7 @@ public class JdbcEnderecoRepository implements EnderecoRepository {
 
     @Override
     public void removerTodosPorPessoaId(Integer pessoaId) throws EntidadeNaoLocalizadaException {
-        String sql = "DELETE FROM T_ARMD_ENDERECO WHERE T_ARMD_PESSOA_id_pessoa = ?";
+        String sql = "DELETE FROM T_ARMD_ENDERECO WHERE T_ARMD_PESSOA_ID_PESSOA = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

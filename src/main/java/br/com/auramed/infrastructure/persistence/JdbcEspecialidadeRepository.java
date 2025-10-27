@@ -91,7 +91,7 @@ public class JdbcEspecialidadeRepository implements EspecialidadeRepository {
 
     @Override
     public List<Especialidade> buscarAtivas() {
-        return buscarTodos(); // Já filtra por ativas
+        return buscarTodos();
     }
 
     @Override

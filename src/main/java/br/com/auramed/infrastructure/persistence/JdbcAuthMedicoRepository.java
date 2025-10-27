@@ -22,7 +22,7 @@ public class JdbcAuthMedicoRepository implements AuthMedicoRepository {
 
     private AuthMedico mapResultSetToAuthMedico(ResultSet rs) throws SQLException {
         Medico medico = new Medico(null, null);
-        medico.setId(rs.getInt("T_ARMD_MEDICO_id_pessoa"));
+        medico.setId(rs.getInt("T_ARMD_MEDICO_ID_PESSOA"));
 
         AuthMedico authMedico = new AuthMedico(medico, rs.getString("NM_EMAIL"), rs.getString("NM_SENHA_HASH"));
         authMedico.setId(rs.getInt("ID_AUTH"));
@@ -83,7 +83,7 @@ public class JdbcAuthMedicoRepository implements AuthMedicoRepository {
 
     @Override
     public AuthMedico buscarPorMedicoId(Integer medicoId) throws EntidadeNaoLocalizadaException {
-        String sql = "SELECT * FROM T_ARMD_AUTH_MEDICO WHERE T_ARMD_MEDICO_id_pessoa = ?";
+        String sql = "SELECT * FROM T_ARMD_AUTH_MEDICO WHERE T_ARMD_MEDICO_ID_PESSOA = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -163,7 +163,7 @@ public class JdbcAuthMedicoRepository implements AuthMedicoRepository {
 
     @Override
     public AuthMedico salvar(AuthMedico authMedico) {
-        String sql = "INSERT INTO T_ARMD_AUTH_MEDICO (T_ARMD_MEDICO_id_pessoa, NM_EMAIL, NM_SENHA_HASH, " +
+        String sql = "INSERT INTO T_ARMD_AUTH_MEDICO (T_ARMD_MEDICO_ID_PESSOA, NM_EMAIL, NM_SENHA_HASH, " +
                 "QT_TENTATIVAS_LOGIN, IN_CONTA_ATIVA, DT_CRIACAO, DT_ALTERACAO_SENHA) " +
                 "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
 
@@ -251,7 +251,7 @@ public class JdbcAuthMedicoRepository implements AuthMedicoRepository {
 
     @Override
     public void removerPorMedicoId(Integer medicoId) throws EntidadeNaoLocalizadaException {
-        String sql = "DELETE FROM T_ARMD_AUTH_MEDICO WHERE T_ARMD_MEDICO_id_pessoa = ?";
+        String sql = "DELETE FROM T_ARMD_AUTH_MEDICO WHERE T_ARMD_MEDICO_ID_PESSOA = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -3,27 +3,42 @@ package br.com.auramed.interfaces.controllers;
 import br.com.auramed.domain.exception.EntidadeNaoLocalizadaException;
 import br.com.auramed.domain.model.AuthMedico;
 import br.com.auramed.domain.service.AuthMedicoService;
+import br.com.auramed.domain.service.AuthenticationService;
+import br.com.auramed.domain.service.PasswordService;
 import br.com.auramed.interfaces.dto.request.AuthMedicoRequestDTO;
 import br.com.auramed.interfaces.dto.response.AuthMedicoResponseDTO;
 import br.com.auramed.interfaces.mappers.AuthMedicoMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+
 import java.util.List;
 
 @ApplicationScoped
 public class AuthMedicoControllerImpl implements AuthMedicoController {
     private final AuthMedicoService authMedicoService;
     private final AuthMedicoMapper authMedicoMapper;
+    private final AuthenticationService authenticationService;
+    private final PasswordService passwordService;
 
     @Inject
-    public AuthMedicoControllerImpl(AuthMedicoService authMedicoService, AuthMedicoMapper authMedicoMapper) {
+    public AuthMedicoControllerImpl(AuthMedicoService authMedicoService,
+                                    AuthMedicoMapper authMedicoMapper,
+                                    AuthenticationService authenticationService,
+                                    PasswordService passwordService) {
         this.authMedicoService = authMedicoService;
         this.authMedicoMapper = authMedicoMapper;
+        this.authenticationService = authenticationService;
+        this.passwordService = passwordService;
+
+        System.out.println("DEBUG: PasswordService injetado: " + (passwordService != null));
     }
 
     @Override
     public AuthMedicoResponseDTO criarAuthMedico(AuthMedicoRequestDTO authMedicoRequest) throws EntidadeNaoLocalizadaException {
         try {
+            String senhaHash = org.mindrot.jbcrypt.BCrypt.hashpw(authMedicoRequest.getSenha(), org.mindrot.jbcrypt.BCrypt.gensalt(12));
+            authMedicoRequest.setSenha(senhaHash);
+
             AuthMedico authMedico = authMedicoMapper.toDomain(authMedicoRequest);
             AuthMedico authMedicoCriado = this.authMedicoService.criar(authMedico);
             return authMedicoMapper.toResponseDTO(authMedicoCriado);
@@ -38,7 +53,11 @@ public class AuthMedicoControllerImpl implements AuthMedicoController {
         AuthMedico authMedicoExistente = this.authMedicoService.localizar(id);
 
         authMedicoExistente.setEmail(authMedicoRequest.getEmail());
-        authMedicoExistente.setSenhaHash(authMedicoRequest.getSenha());
+
+        if (authMedicoRequest.getSenha() != null && !authMedicoRequest.getSenha().isEmpty()) {
+            String senhaHash = passwordService.hashPassword(authMedicoRequest.getSenha());
+            authMedicoExistente.setSenhaHash(senhaHash);
+        }
 
         AuthMedico authMedicoAtualizado = this.authMedicoService.editar(id, authMedicoExistente);
         return authMedicoMapper.toResponseDTO(authMedicoAtualizado);
@@ -74,12 +93,13 @@ public class AuthMedicoControllerImpl implements AuthMedicoController {
     }
 
     @Override
-    public void validarCredenciais(String email, String senha) throws EntidadeNaoLocalizadaException {
-        this.authMedicoService.validarCredenciais(email, senha);
+    public String validarCredenciais(String email, String senha) throws EntidadeNaoLocalizadaException {
+        return authenticationService.login(email, senha);
     }
 
     @Override
-    public AuthMedicoResponseDTO atualizarSenha(Integer id, String novaSenhaHash) throws EntidadeNaoLocalizadaException {
+    public AuthMedicoResponseDTO atualizarSenha(Integer id, String novaSenha) throws EntidadeNaoLocalizadaException {
+        String novaSenhaHash = org.mindrot.jbcrypt.BCrypt.hashpw(novaSenha, org.mindrot.jbcrypt.BCrypt.gensalt(12));
         AuthMedico authMedicoAtualizado = this.authMedicoService.atualizarSenha(id, novaSenhaHash);
         return authMedicoMapper.toResponseDTO(authMedicoAtualizado);
     }
@@ -94,5 +114,15 @@ public class AuthMedicoControllerImpl implements AuthMedicoController {
     public AuthMedicoResponseDTO ativarConta(Integer id) throws EntidadeNaoLocalizadaException {
         AuthMedico authMedicoAtualizado = this.authMedicoService.ativarConta(id);
         return authMedicoMapper.toResponseDTO(authMedicoAtualizado);
+    }
+
+    @Override
+    public void logout(String token) {
+        authenticationService.logout(token);
+    }
+
+    @Override
+    public boolean validarToken(String token) {
+        return authenticationService.validarToken(token);
     }
 }

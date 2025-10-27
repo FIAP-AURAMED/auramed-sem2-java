@@ -33,10 +33,10 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public Medico buscarPorId(Integer id) throws EntidadeNaoLocalizadaException {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
-                "WHERE m.T_ARMD_PESSOA_id_pessoa = ? AND p.IN_ATIVO = 'S'";
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
+                "WHERE m.T_ARMD_PESSOA_ID_PESSOA = ? AND p.IN_ATIVO = 'S'";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -57,9 +57,9 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public Medico buscarPorCrm(String crm) throws EntidadeNaoLocalizadaException {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
                 "WHERE m.NR_CRM = ? AND p.IN_ATIVO = 'S'";
 
         try (Connection conn = databaseConnection.getConnection();
@@ -80,10 +80,10 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public Medico buscarPorPessoaId(Integer pessoaId) throws EntidadeNaoLocalizadaException {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
-                "WHERE m.T_ARMD_PESSOA_id_pessoa = ? AND p.IN_ATIVO = 'S'";
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
+                "WHERE m.T_ARMD_PESSOA_ID_PESSOA = ? AND p.IN_ATIVO = 'S'";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -103,9 +103,9 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public List<Medico> buscarTodos() {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
                 "WHERE p.IN_ATIVO = 'S'";
         List<Medico> medicos = new ArrayList<>();
 
@@ -126,11 +126,11 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public List<Medico> buscarPorEspecialidade(Integer idEspecialidade) {
-        String sql = "SELECT DISTINCT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT DISTINCT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
-                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON m.T_ARMD_PESSOA_id_pessoa = me.T_ARMD_MEDICO_id_pessoa " +
-                "WHERE me.T_ARMD_ESPECIALIDADE_id_especialidade = ? AND p.IN_ATIVO = 'S'";
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
+                "INNER JOIN T_ARMD_MEDICO_ESPECIALIDADE me ON m.T_ARMD_PESSOA_ID_PESSOA = me.T_ARMD_MEDICO_ID_PESSOA " +
+                "WHERE me.T_ARMD_ESPECIALIDADE_ID_ESPECIALIDADE = ? AND p.IN_ATIVO = 'S'";
         List<Medico> medicos = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -152,9 +152,9 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public List<Medico> buscarPorAceitaTeleconsulta(String aceitaTeleconsulta) {
-        String sql = "SELECT m.T_ARMD_PESSOA_id_pessoa as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
+        String sql = "SELECT m.T_ARMD_PESSOA_ID_PESSOA as ID_PESSOA, m.NR_CRM, m.IN_ACEITA_TELECONSULTA, " +
                 "p.IN_ATIVO FROM T_ARMD_MEDICO m " +
-                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_id_pessoa = p.ID_PESSOA " +
+                "INNER JOIN T_ARMD_PESSOA p ON m.T_ARMD_PESSOA_ID_PESSOA = p.ID_PESSOA " +
                 "WHERE m.IN_ACEITA_TELECONSULTA = ? AND p.IN_ATIVO = 'S'";
         List<Medico> medicos = new ArrayList<>();
 
@@ -182,7 +182,7 @@ public class JdbcMedicoRepository implements MedicoRepository {
 
     @Override
     public Medico salvar(Medico medico) {
-        String sql = "INSERT INTO T_ARMD_MEDICO (T_ARMD_PESSOA_id_pessoa, NR_CRM, IN_ACEITA_TELECONSULTA, DT_CADASTRO) " +
+        String sql = "INSERT INTO T_ARMD_MEDICO (T_ARMD_PESSOA_ID_PESSOA, NR_CRM, IN_ACEITA_TELECONSULTA, DT_CADASTRO) " +
                 "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
 
         try (Connection conn = databaseConnection.getConnection();
@@ -211,7 +211,7 @@ public class JdbcMedicoRepository implements MedicoRepository {
             throw new IllegalArgumentException("ID do médico não pode ser nulo para edição");
         }
 
-        String sql = "UPDATE T_ARMD_MEDICO SET NR_CRM = ?, IN_ACEITA_TELECONSULTA = ? WHERE T_ARMD_PESSOA_id_pessoa = ?";
+        String sql = "UPDATE T_ARMD_MEDICO SET NR_CRM = ?, IN_ACEITA_TELECONSULTA = ? WHERE T_ARMD_PESSOA_ID_PESSOA = ?";
 
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

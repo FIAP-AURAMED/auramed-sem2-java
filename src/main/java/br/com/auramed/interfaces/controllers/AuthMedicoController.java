@@ -13,8 +13,10 @@ public interface AuthMedicoController {
     AuthMedicoResponseDTO getAuthMedicoByMedicoId(Integer medicoId) throws EntidadeNaoLocalizadaException;
     void deleteAuthMedico(Integer id) throws EntidadeNaoLocalizadaException;
     List<AuthMedicoResponseDTO> getAllAuthMedicos();
-    void validarCredenciais(String email, String senha) throws EntidadeNaoLocalizadaException;
-    AuthMedicoResponseDTO atualizarSenha(Integer id, String novaSenhaHash) throws EntidadeNaoLocalizadaException;
+    String validarCredenciais(String email, String senha) throws EntidadeNaoLocalizadaException;
+    AuthMedicoResponseDTO atualizarSenha(Integer id, String novaSenha) throws EntidadeNaoLocalizadaException;
     AuthMedicoResponseDTO bloquearConta(Integer id) throws EntidadeNaoLocalizadaException;
     AuthMedicoResponseDTO ativarConta(Integer id) throws EntidadeNaoLocalizadaException;
+    void logout(String token);
+    boolean validarToken(String token);
 }
