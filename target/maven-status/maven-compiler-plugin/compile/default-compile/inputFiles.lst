@@ -57,7 +57,6 @@
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/api/rest/PacienteRestController.java
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/api/rest/PerfilCognitivoRestController.java
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/api/rest/PessoaRestController.java
-/home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/config/CorsConfig.java
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/config/DatabaseConfig.java
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/exception/InfrastructureException.java
 /home/diandrade/Documents/auramed-sem2-java/src/main/java/br/com/auramed/infrastructure/persistence/DatabaseConnection.java
