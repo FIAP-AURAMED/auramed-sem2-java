@@ -15,7 +15,6 @@ public class DatabaseConfig {
         return new DatabaseConnectionImpl(dataSource);
     }
 
-    // Repositórios existentes do sistema
     @Produces
     @ApplicationScoped
     public PessoaRepository pessoaRepository(DatabaseConnection databaseConnection) {
@@ -52,8 +51,6 @@ public class DatabaseConfig {
         return new JdbcMedicoEspecialidadeRepository(databaseConnection);
     }
 
-    // NOVOS REPOSITÓRIOS DO MÓDULO DE PACIENTES
-
     @Produces
     @ApplicationScoped
     public PacienteRepository pacienteRepository(DatabaseConnection databaseConnection) {
@@ -82,5 +79,17 @@ public class DatabaseConfig {
     @ApplicationScoped
     public PerfilCognitivoRepository perfilCognitivoRepository(DatabaseConnection databaseConnection) {
         return new JdbcPerfilCognitivoRepository(databaseConnection);
+    }
+
+    @Produces
+    @ApplicationScoped
+    public ConversacaoRepository conversacaoRepository(DatabaseConnection databaseConnection) {
+        return new JdbcConversacaoRepository(databaseConnection);
+    }
+
+    @Produces
+    @ApplicationScoped
+    public BaseConhecimentoRepository baseConhecimentoRepository(DatabaseConnection databaseConnection) {
+        return new JdbcBaseConhecimentoRepository(databaseConnection);
     }
 }
