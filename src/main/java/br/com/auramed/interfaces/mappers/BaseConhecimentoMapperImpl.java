@@ -40,9 +40,6 @@ public class BaseConhecimentoMapperImpl implements BaseConhecimentoMapper {
         response.setCategoria(conhecimento.getCategoria());
         response.setPalavrasChave(conhecimento.getPalavrasChave());
         response.setConfianca(conhecimento.getConfianca());
-        // response.setDataCadastro(conhecimento.getDataCadastro());
-        // response.setAtivo(conhecimento.getAtivo());
-
         return response;
     }
 
