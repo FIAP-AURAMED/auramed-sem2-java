@@ -21,9 +21,15 @@ public class ConversacaoServiceImpl implements ConversacaoService {
     @Override
     public Conversacao salvar(Conversacao conversacao) {
         try {
-            conversacao.validarUsuarioId();
-            conversacao.validarPerguntaUsuario();
-            conversacao.validarRespostaBot();
+            if (conversacao.getUsuarioId() == null || conversacao.getUsuarioId().trim().isEmpty()) {
+                throw new RuntimeException("ID do usuário não pode ser vazio");
+            }
+            if (conversacao.getPerguntaUsuario() == null || conversacao.getPerguntaUsuario().trim().isEmpty()) {
+                throw new RuntimeException("Pergunta do usuário não pode ser vazia");
+            }
+            if (conversacao.getRespostaBot() == null || conversacao.getRespostaBot().trim().isEmpty()) {
+                throw new RuntimeException("Resposta do bot não pode ser vazia");
+            }
 
             Conversacao conversacaoSalva = conversacaoRepository.salvar(conversacao);
             logger.info("Conversação salva com sucesso. ID: " + conversacaoSalva.getId() + " - Usuário: " + conversacaoSalva.getUsuarioId());

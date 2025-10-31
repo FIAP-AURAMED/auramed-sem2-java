@@ -13,12 +13,13 @@ public class ChatMapperImpl implements ChatMapper {
             return null;
         }
 
-        ChatResponseDTO response = new ChatResponseDTO();
-        response.setResposta(respostaChat.getResposta());
-        response.setCategoria(respostaChat.getCategoria());
-        response.setSentimento(respostaChat.getSentimento());
-        response.setFonteResposta(respostaChat.getFonteResposta());
+        ChatResponseDTO dto = new ChatResponseDTO();
+        dto.setResposta(respostaChat.getResposta());
+        dto.setCategoria(respostaChat.getCategoria());
+        dto.setSentimento(respostaChat.getSentimento());
+        dto.setFonteResposta(respostaChat.getFonteResposta());
+        dto.setUsuarioId(respostaChat.getUsuarioId());
 
-        return response;
+        return dto;
     }
 }

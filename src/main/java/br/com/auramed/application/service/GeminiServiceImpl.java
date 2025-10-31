@@ -2,7 +2,7 @@ package br.com.auramed.application.service;
 
 import br.com.auramed.domain.model.BaseConhecimento;
 import br.com.auramed.domain.service.GeminiService;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
 public class GeminiServiceImpl implements GeminiService {
 
     @Inject
-    ChatLanguageModel modeloGemini;
+    ChatModel modeloGemini;
 
     @Inject
     Logger logger;
@@ -21,8 +21,8 @@ public class GeminiServiceImpl implements GeminiService {
         try {
             logger.info("Gerando resposta com Gemini para: " + pergunta);
 
-            String prompt = construirPrompt(pergunta, contexto);
-            String resposta = modeloGemini.generate(prompt);
+            String textoPrompt = construirPrompt(pergunta, contexto);
+            String resposta = modeloGemini.chat(textoPrompt);
 
             logger.info("Resposta gerada com sucesso pelo Gemini");
             return resposta;

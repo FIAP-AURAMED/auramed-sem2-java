@@ -2,7 +2,7 @@ package br.com.auramed.application.service;
 
 import br.com.auramed.domain.model.Sentimento;
 import br.com.auramed.domain.service.AnaliseSentimentalService;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
 public class AnaliseSentimentalServiceImpl implements AnaliseSentimentalService {
 
     @Inject
-    ChatLanguageModel modeloGemini;
+    ChatModel modeloGemini;
 
     @Inject
     Logger logger;
@@ -21,16 +21,16 @@ public class AnaliseSentimentalServiceImpl implements AnaliseSentimentalService 
         try {
             logger.info("Analisando sentimento do texto: " + (texto.length() > 50 ? texto.substring(0, 50) + "..." : texto));
 
-            String prompt = """
-                Analise o sentimento do seguinte texto em português e responda APENAS com uma destas palavras: 
-                POSITIVO, NEUTRO ou NEGATIVO.
-                
-                Texto: "%s"
-                """.formatted(texto);
+            String promptTexto = """
+            Analise o sentimento do seguinte texto em português e responda APENAS com uma destas palavras: 
+            POSITIVO, NEUTRO ou NEGATIVO.
+            
+            Texto: "%s"
+            """.formatted(texto);
 
-            String resultado = modeloGemini.generate(prompt);
+            String resultado = modeloGemini.chat(promptTexto);
+
             Sentimento sentimento = Sentimento.valueOf(resultado.trim().toUpperCase());
-
             logger.info("Sentimento analisado: " + sentimento);
             return sentimento;
 

@@ -4,7 +4,7 @@ import br.com.auramed.domain.model.Conversacao;
 import br.com.auramed.domain.model.BaseConhecimento;
 import br.com.auramed.domain.model.CategoriaPergunta;
 import br.com.auramed.domain.model.Sentimento;
-import br.com.auramed.domain.model.RespostaChat; // Import adicionado
+import br.com.auramed.domain.model.RespostaChat;
 import br.com.auramed.domain.service.*;
 import br.com.auramed.domain.repository.ConversacaoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -70,7 +70,8 @@ public class ChatbotServiceImpl implements ChatbotService {
             conversacaoRepository.salvar(conversa);
             logger.info("Conversa salva com sucesso para usuário: " + usuarioId);
 
-            return new RespostaChat(respostaFinal, categoria, sentimento, fonteResposta);
+            // 5. Retornar resposta incluindo o usuarioId
+            return new RespostaChat(respostaFinal, categoria, sentimento, fonteResposta, usuarioId);
 
         } catch (Exception e) {
             logger.error("Erro ao processar pergunta do usuário " + usuarioId + ": " + e.getMessage());
