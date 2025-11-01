@@ -1,32 +1,27 @@
-# --- ESTÁGIO 1: BUILD ---
-# Usamos uma imagem do Maven com a JDK 21
+# Stage 1: Build the application
 FROM maven:3.9-eclipse-temurin-21 AS build
-
-# Define o diretório de trabalho
 WORKDIR /app
 
-# Copia o código-fonte
-COPY . .
+# Copy Maven files
+COPY pom.xml .
 
-# Roda o build do Quarkus (pulando testes, crucial para o deploy)
-RUN mvn package -Dquarkus.package.type=fast-jar -DskipTests
+# Copy sourc   e code
+COPY src src
 
+# Build the application using the pre-installed Maven
+RUN mvn clean package -DskipTests
 
-# --- ESTÁO 2: RUN ---
-# Usamos a imagem base que você já tinha
-FROM registry.access.redhat.com/ubi9/openjdk-21:1.23
+# Stage 2: Create the runtime image
+FROM eclipse-temurin:21-jre
+WORKDIR /work
 
-# Define o usuário (boa prática)
-USER 185
+# Copy the entire quarkus-app directory structure
+COPY --from=build /app/target/quarkus-app/lib/ /work/lib/
+COPY --from=build /app/target/quarkus-app/*.jar /work/
+COPY --from=build /app/target/quarkus-app/app/ /work/app/
+COPY --from=build /app/target/quarkus-app/quarkus/ /work/quarkus/
 
-# O "pulo do gato": Copia os arquivos do estágio "build"
-COPY --from=build /app/target/quarkus-app/lib/ /deployments/lib/
-COPY --from=build /app/target/quarkus-app/app/ /deployments/app/
-COPY --from=build /app/target/quarkus-app/quarkus/ /deployments/quarkus/
-COPY --from=build /app/target/quarkus-app/*.jar /deployments/
-
-# Expõe a porta
 EXPOSE 8080
 
-# Comando para iniciar a aplicação
-CMD ["java", "-jar", "/deployments/quarkus-run.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "/work/quarkus-run.jar"]
