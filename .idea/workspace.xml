@@ -6,23 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="675b3487-d989-468c-acfb-2e22e775cb51" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/auramed-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/auramed-dev.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/build-analytics-event.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/build-analytics-event.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/build-metrics.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/build-metrics.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/auramed/application/service/ChatbotServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/auramed/application/service/ChatbotServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/auramed/domain/model/RespostaChat.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/auramed/domain/model/RespostaChat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/controllers/ChatbotControllerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/controllers/ChatbotControllerImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/dto/response/ChatResponseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/dto/response/ChatResponseDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/mappers/ChatMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/br/com/auramed/interfaces/mappers/ChatMapperImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/null/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/null/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/null/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/null/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/null/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/quarkus/bootstrap/dev-app-model.dat" beforeDir="false" afterPath="$PROJECT_DIR$/target/quarkus/bootstrap/dev-app-model.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/quarkus/bootstrap/test-app-model.dat" beforeDir="false" afterPath="$PROJECT_DIR$/target/quarkus/bootstrap/test-app-model.dat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
